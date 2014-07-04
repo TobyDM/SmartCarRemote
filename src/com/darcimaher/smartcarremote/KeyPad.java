@@ -20,6 +20,9 @@ public class KeyPad extends JPanel implements SingleKeyDelegate {
 	private SingleKey upArrowButton;
 	private SingleKey downArrowButton;
 	private CarCommand lastCommand = CarCommand.STOP;
+//	private OutputStream outputStream;
+//	private InputStream inputStream;
+
 
 	public KeyPad() {
 
@@ -44,19 +47,42 @@ public class KeyPad extends JPanel implements SingleKeyDelegate {
 		this.rightArrowButton = new SingleKey(KeyEvent.VK_RIGHT, 0, this);
 		add(rightArrowButton, gbc);
 
+		// connect
+//		this.connectToCar();
+
 	}
+
+//	private void connectToCar() {
+//
+//		NXTConnector conn = new NXTConnector();// create a new NXT connector
+//		conn.setDebug(true);
+//		boolean connected = conn.connectTo(); // try to connect to any
+//														// NXT over bluetooth
+//
+//		if (!connected) {// failure
+//			System.out.println("Failed to connect to any NXT");
+//		}
+//
+//		else// success!
+//		{
+//			System.out.println("Connected to " + conn.getNXTInfo());
+//			outputStream = conn.getOutputStream();
+//			inputStream = conn.getInputStream();
+//		}
+//
+//	}
 
 	@Override
 	public void keyTouched() {
 
 		CarCommand newCommand = this.getCurrentCommand();
-		
-		if (newCommand != lastCommand){
-			this.sendCommand (newCommand);
+
+		if (newCommand != lastCommand) {
+			this.sendCommand(newCommand);
 		}
-		
+
 	}
-	
+
 	private void sendCommand(CarCommand newCommand) {
 		this.lastCommand = newCommand;
 		System.out.println(newCommand.name());
@@ -68,11 +94,14 @@ public class KeyPad extends JPanel implements SingleKeyDelegate {
 
 		if (this.leftArrowButton.isPressed() && this.upArrowButton.isPressed()) {
 			newCommand = CarCommand.TURN_LEFT;
-		} else if (this.rightArrowButton.isPressed() && this.upArrowButton.isPressed()) {
+		} else if (this.rightArrowButton.isPressed()
+				&& this.upArrowButton.isPressed()) {
 			newCommand = CarCommand.TURN_RIGHT;
-		} else if (this.leftArrowButton.isPressed() && this.downArrowButton.isPressed()) {
+		} else if (this.leftArrowButton.isPressed()
+				&& this.downArrowButton.isPressed()) {
 			newCommand = CarCommand.REV_TURN_LEFT;
-		} else if (this.rightArrowButton.isPressed() && this.downArrowButton.isPressed()) {
+		} else if (this.rightArrowButton.isPressed()
+				&& this.downArrowButton.isPressed()) {
 			newCommand = CarCommand.REV_TURN_RIGHT;
 		} else if (this.leftArrowButton.isPressed()) {
 			newCommand = CarCommand.ROTATE_LEFT;
