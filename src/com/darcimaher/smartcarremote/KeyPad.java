@@ -20,9 +20,7 @@ public class KeyPad extends JPanel implements SingleKeyDelegate {
 	private SingleKey upArrowButton;
 	private SingleKey downArrowButton;
 	private CarCommand lastCommand = CarCommand.STOP;
-//	private OutputStream outputStream;
-//	private InputStream inputStream;
-
+	private USBCom usbCommunicator = USBCom.getInstance();
 
 	public KeyPad() {
 
@@ -49,7 +47,12 @@ public class KeyPad extends JPanel implements SingleKeyDelegate {
 
 		// connect
 //		this.connectToCar();
+		this.connectToRelay();
 
+	}
+	
+	private void connectToRelay(){
+		usbCommunicator.connect();
 	}
 
 //	private void connectToCar() {
@@ -86,6 +89,7 @@ public class KeyPad extends JPanel implements SingleKeyDelegate {
 	private void sendCommand(CarCommand newCommand) {
 		this.lastCommand = newCommand;
 		System.out.println(newCommand.name());
+		usbCommunicator.sendInt(newCommand.ordinal());
 	}
 
 	private CarCommand getCurrentCommand() {
