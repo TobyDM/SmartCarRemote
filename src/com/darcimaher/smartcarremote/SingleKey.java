@@ -17,9 +17,6 @@ import com.darcimaher.smartcarremote.MainWindow.SingleKeyDelegate;
 public class SingleKey extends JPanel {
 	
 	private boolean isPressed = false;
-	
-	
-	
 
     public boolean isPressed() {
 		return isPressed;
